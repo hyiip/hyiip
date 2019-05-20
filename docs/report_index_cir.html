@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+$(document).ready(() => {
+	const zrButtonList = ["zr1", "zr2", "zr3", "zr4", "zr5"];
+
+	const zupdateValue = () => {
+        let zoutput = "";
+
+        const zmode = $(`input[name=zr1]:checked`).val()
+        const zindex = $(`input[name=zr2]:checked`).val()
+        const zday = $(`input[name=zr3]:checked`).val()
+        const zSD = $(`input[name=zr4]:checked`).val()
+        const zvari = $(`input[name=zr5]:checked`).val()
+        zoutput = "https://hyiip.github.io/docs/plotly/zscore/SD" + zSD + "/" + zmode + "/day" + zday + "/" + zindex + "/" + zvari + ".html"
+        $("#zgraph").load(zoutput);
+        
+    }
+
+	zrButtonList.forEach( (zr) => {
+    	$(`input[name='${zr}']`).change(()=> {
+    		zupdateValue();
+		});
+    });
+  	zupdateValue();
+});
+
+
+
+</script>
+<script>
+$(document).ready(() => {
+	const irButtonList = ["ir1", "ir2", "ir3", "ir4", "ir5"];
+
+	const iupdateValue = () => {
+        let ioutput = "";
+
+        const imode = $(`input[name=ir1]:checked`).val()
+        const iindex = $(`input[name=ir2]:checked`).val()
+        const iday = $(`input[name=ir3]:checked`).val()
+        const iSD = $(`input[name=ir4]:checked`).val()
+        const ivari = $(`input[name=ir5]:checked`).val()
+        ioutput = "https://hyiip.github.io/docs/plotly/SD" + iSD + "/" + imode + "/day" + iday + "/" + iindex + "/" + ivari + ".html"
+        $("#igraph").load(ioutput);
+        
+    }
+
+	irButtonList.forEach( (ir) => {
+    	$(`input[name='${ir}']`).change(()=> {
+    		iupdateValue();
+		});
+    });
+  	iupdateValue();
+});
+
+
+
+</script>
+<script>
+$(document).ready(() => {
+	const rrButtonList = ["rr1", "rr2", "rr3", "rr4"];
+
+	const rupdateValue = () => {
+        let routput = "";
+
+        const rindex = $(`input[name=rr1]:checked`).val()
+        const rday = $(`input[name=rr2]:checked`).val()
+        const rSD = $(`input[name=rr3]:checked`).val()
+        const rvari = $(`input[name=rr4]:checked`).val()
+        routput = "https://hyiip.github.io/docs/plotly/raw/SD" + rSD  + "/day" + rday + "/" + rindex + "/" + rvari + ".html"
+        $("#rgraph").load(routput);
+        
+    }
+
+	rrButtonList.forEach( (rr) => {
+    	$(`input[name='${rr}']`).change(()=> {
+    		rupdateValue();
+		});
+    });
+  	rupdateValue();
+});
+
+
+
+</script>
+</head>
+<body>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<p><strong>Analysis different index with CIR model</strong></p>
+<p><strong>Model</strong></p>
+<p>6 indexes are analyzed in this report. They are 1) Dow Jones Industrial Average (DJI), 2) Hang Seng index (HSI), 3) S&amp;P 500 (GSPC), 4) NASDAQ Composite (IXIC) 5) DAX (GDAXI) and 6) Nikkei 225 (N225). The dataframe is started from the earliest record that can be obtained, until 18/11/2018.</p>
+<p>The model used for indices is as following: <br />$$ y=- ln \frac{x_U-x}{x_U-x_L}\ $$ <br /> with <br />
+$$dy=\kappa \left(\theta -y\right)dt+\sigma \sqrt{y}\ dW\ -(1)$$ <br /> Here, $x = S / S_{MA}$ . $S$ is the value of index of specific day, and $S_{MA}$ is the n-day moving average of the index. Therefore, $x$ is the normalized index value.</p>
+<p>$x_U$ and $x_L$ indicate the upper and lower boundaries of $x$. If $x = x_U$, then $y = - \ln 0 = \infty$. If $x = x_L$, then $y = \ln 1 = 0$. Since $y$ follow a CIR process, $y > 0$, crash occurs if $x$ reaches the lower boundary $x_L$.</p>
+<p>The plots of the index, moving average of the index, the normalized index value and $y$ are shown below:</p>
+<p><div class="btn-group-toggle" data-toggle="buttons">
+Index:
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="rr1" value="DJI" checked autocomplete="off">DJI
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr1" value="HSI" autocomplete="off">HSI
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr1" value="GSPC" autocomplete="off">GSPC
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr1" value="IXIC" autocomplete="off">IXIC
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr1" value="GDAXI" autocomplete="off">GDAXI
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr1" value="N225" autocomplete="off">N225
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+    day: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="rr2" value="30" checked autocomplete="off">30
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr2" value="50" autocomplete="off">50
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr2" value="60" autocomplete="off">60
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr2" value="90" autocomplete="off">90
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr2" value="120" autocomplete="off">120
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+  SD: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="rr3" value="175" checked autocomplete="off">1.75
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr3" value="200" autocomplete="off">2
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+    Data: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="rr4" value="index" checked autocomplete="off">Index & Moving Average
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="rr4" value="normalize" autocomplete="off">
+    $S/S_{MA}$ and $y$
+  </label>
+</div>
+
+<p> 
+
+<div class = "w-75" id="rgraph"></div></p>
+<p>The red dotted line in graph &quot;S/S_MA &amp; y&quot; represent $x_L$.</p>
+<p>If $ x < x_L $, then $y = \ln p$ with $p>1$. This will result in $y<0$. Clearly if this occur, $y$ does not follow a CIR process then.</p>
+<p>The probability density function of a CIR process is known in closed form. A parameter calibration for this process is then available by maximum likelihood estimation. In addition, using Wald test with null hypothesis $H_0$ = 0. We can test the significance of parameters. The z-score of the parameter can be determined by$\ z=\frac{\widehat{\beta }}{se(\widehat{\beta })}$ with $\widehat{\beta }$ as the estimated value. The z-score is then compared to a normal distribution to obtain a p-value. (Alternatively, we can compare $z^2 = \frac{{\widehat{\beta }}^2}{var(\widehat{\beta })}$ with chi-squared distribution)</p>
+<p>On the other hand, if we model $y$ with AR-GARCH(1,1) model, that is: <br /> $$y_t=c_0+c_1 y_{t-1}+ \varepsilon_t-(2)$$ $$ \varepsilon_t=\sigma_t \nu_t $$ $$\sigma_t^2=a_0+a_1 \varepsilon_{t-1}^2+b_1 \sigma_{t-1}^2$$ <br /> where $\nu_t$ is a strong white noise process.</p>
+<p>If we try to discretize Eq. (1) by Euler&ndash;Maruyama method, that is, writing: <br /> 
+$$\Delta y= y_t-y_{t-1}= \kappa(\theta-y_{t-1} )\Delta t + \text{diffusion term}$$ Or $$y_t=\kappa \theta\Delta t - \kappa \Delta t \,y_{t-1}+ y_{t-1}=\kappa\theta\Delta t+ y_{t-1} (1-\kappa\Delta t)$$ <br />
+ Choosing $\Delta t = 1$, and compare with Eq. (2), then <br />
+ $$c_1 = (1 - \kappa), \quad c_0 = \kappa\theta $$<br />
+  So, if $y$ follows a mean-reverting process, then $c_1 < 1$.</p>
+<p>By assuming the error distribution to be Gaussian, we can obtain z-statistic again by $z=\frac{\widehat{\beta }}{se(\widehat{\beta })}$.</p>
+<p>In this study, we consider the case when $(x_U,x_L) = (1.5x_{MA},0.5x_{MA})$ ($SD=2$) and $(x_U,x_L) = (1.4375x_{MA},0.5625x_{MA})$ ($SD=1.75$)</p>
+<p><strong>rolling window and expanding window</strong></p>
+<p>For CIR process, three parameters $(\kappa, \theta, \sigma)$ can be determined by maximum likelihood estimation (MLE). Suppose we have $n$ data and the window size is $m$, after a rolling window analysis (or expanding window), we&rsquo;ll have $n-m$ sets of parameters of $(\kappa, \theta, \sigma)$.</p>
+<p>In contrast, for AR-GARCH(1,1) model, we can determine $\kappa$, $\theta$ from the coefficient of AR model. For $\sigma_{GARCH}$, we first obtain a $[\sigma_t]$ series for each day from GARCH(1,1) model, and $\sigma_t$ of day $i$ is defined as the last $\sigma$ from the $[\sigma_t]$ series . Then for every $\sigma_t$, divide $\sigma_t$ by $\sqrt{x_t}$. If the window size is $m$, the moving average of $\{\sigma_t/\sqrt{x_t}\}$ within $m$ days is the desired \sigma in CIR process. Therefore, there will only be $n-2m$ sets of $\sigma_{GARCH}$.</p>
+<p>Also, the standard error of $(\kappa, \theta, \sigma)_{CIR}$ in CIR process can be obtained during MLE. The standard error of $(\kappa, \theta)_{GARCH}$ can be also determined using EViews. But for \sigma_{CIR}, since the error of \sigma_t is not known. The standard error of $\sigma_{CIR}$, is interpret as the standard derivation of$\{{ \sigma }_t/\sqrt{x_t}\}$ within $m$ days, divided by square root of number of observables, $m$, that is <br />
+$$se\left({\sigma }_{GARCH}\right)=\frac{\mathit{\Delta}{\sigma }_{GARCH}}{\sqrt{m}}$$ </p>
+<p><strong>Result</strong></p>
+<p>For variable $y$, we first propose that it follows a CIR process. Then a parameter estimation is performed based on CIR model. $\kappa_{CIR}$, $\theta_{CIR}$ and $\sigma_{CIR}$ is then obtained by maximum likelihood estimation.</p>
+<p>At the same time, $y$ is fitted into AR-GARCH(1,1) model. The coefficient obtained from AR model is then transformed in the language of CIR model. The estimated variance from GARCH(1,1) model is used to obtain into the volatility in CIR model.</p>
+<p>We then compare the parameter obtained from MLE and from GARCH to see if they agree. Result from these two approaches suggest that $y$ follows a mean reverting process at least.</p>
+<p>The plots of calibrated $\kappa$, $\theta$ and $\sigma$ from CIR model and GARCH is shown below:</p>
+<p><div class="btn-group-toggle" data-toggle="buttons">
+  Mode: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="ir1" value="expand" checked autocomplete="off">Expanding windows
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir1" value="roll" autocomplete="off">Rolling windows
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+Index:
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="ir2" value="DJI" checked autocomplete="off">DJI
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir2" value="HSI" autocomplete="off">HSI
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir2" value="GSPC" autocomplete="off">GSPC
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir2" value="IXIC" autocomplete="off">IXIC
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir2" value="GDAXI" autocomplete="off">GDAXI
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir2" value="N225" autocomplete="off">N225
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+    day: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="ir3" value="30" checked autocomplete="off">30
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir3" value="50" autocomplete="off">50
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir3" value="60" autocomplete="off">60
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir3" value="90" autocomplete="off">90
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir3" value="120" autocomplete="off">120
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+  SD: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="ir4" value="175" checked autocomplete="off">1.75
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir4" value="200" autocomplete="off">2
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+    Parameter: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="ir5" value="kappa" checked autocomplete="off">$\kappa$
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir5" value="theta" autocomplete="off">$\theta$
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="ir5" value="sigma" autocomplete="off">$\sigma$
+  </label>
+</div>
+
+<p> 
+
+<div class = "w-75" id="igraph"></div></p>
+<p>In this figure, the blue line represents the parameter calibrated by MLE, and orange line is obtained by GARCH. The light blue bounded area represents the 95% confidence interval of parameter obtained by MLE. Similarly, the light orange area is the confidence interval by GARCH.</p>
+<p>It can be observed that the shape of the parameter curve obtained from CIR model and GARCH look very similar, essentially, the &ldquo;jump&rdquo; and &ldquo;drop&rdquo; of the parameters occur about the same time from two different approach, suggested that there is some sort of consistency in MLE approach and GARCH approach.</p>
+<p>On the other hand, the plots somehow show the scaling property of different parameter. If we keep the analysing mode (rolling window or expanding window) and index unchanged, while varying the duration of moving average and the upper and lower bound (SD), it appears that the feature of calibrated $\kappa$, $\theta$ and $\sigma$ graph in general remain unchanged but the scaling. This scaling effect is more significant if we look into a rolling window analysis.</p>
+<p>The standard error of $\theta_{GARCH}$   is much larger than compared to the others this is because determining $\theta_{GARCH}$ involve division of two estimators, thus the propagation error is then larger due to multiplication.</p>
+<p>The conversion of z-score and p-value can be done by some simple function. Since they are equivalent, z-score is used in this report. The plot of z-score is shown below:</p>
+<p><div class="btn-group-toggle" data-toggle="buttons">
+  Mode: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="zr1" value="expand" checked autocomplete="off">Expanding windows
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr1" value="roll" autocomplete="off">Rolling windows
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+Index:
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="zr2" value="DJI" checked autocomplete="off">DJI
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr2" value="HSI" autocomplete="off">HSI
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr2" value="GSPC" autocomplete="off">GSPC
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr2" value="IXIC" autocomplete="off">IXIC
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr2" value="GDAXI" autocomplete="off">GDAXI
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr2" value="N225" autocomplete="off">N225
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+    day: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="zr3" value="30" checked autocomplete="off">30
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr3" value="50" autocomplete="off">50
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr3" value="60" autocomplete="off">60
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr3" value="90" autocomplete="off">90
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr3" value="120" autocomplete="off">120
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+  SD: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="zr4" value="175" checked autocomplete="off">1.75
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr4" value="200" autocomplete="off">2
+  </label>
+</div>
+
+<div class="btn-group-toggle" data-toggle="buttons">
+    Parameter: 
+  <label class="btn btn-outline-secondary active">
+    <input type="radio" name="zr5" value="kappa" checked autocomplete="off">$\kappa$
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr5" value="theta" autocomplete="off">$\theta$
+  </label>
+  <label class="btn btn-outline-secondary">
+    <input type="radio" name="zr5" value="sigma" autocomplete="off">$\sigma$
+  </label>
+</div>
+
+<p> 
+
+<div class = "w-75" id="zgraph"></div></p>
+<p>The z-score of the estimated parameter is generally much larger than 2 from both approaches, except for $\theta_{GARCH}$ due to a larger standard error. But still, the z-score from expanding window is monotonically increasing to a satisfying level.</p>
+<p>A z-score > 10 suggests that p-value < .00001. This means that we are confident to reject the null hypothesis of the parameter ($\kappa$, $\theta$, $\sigma$) being insignificant.</p>
+<p>On the contrast, the difference in \sigmais relatively significant. Since variance of GARCH(1,1) model and CIR process is different intrinsically, this difference should be acceptable.</p>
+<p><strong>Some unsolved question</strong></p>
+<p>There is some inconsistency to determine $\sigma_{GARCH}$ from expanding window. To determine $\sigma_{GARCH}$, a series of variances of $y$ is obtained from GARCH, and the variance from latest date is defined as the variance of the particular day. As the window expand, the $\{\sigma\}$ series is generated from the accumulation from previous result. So if there is 2000 data points with window size 500, the $\{\sigma\}$ series (with size of 1500) is obtained from previous 1500 times of calculation. These ${\sigma}$ is then expanded again to determine $\sigma_{GARCH}$ by averaging ${\ \{\sigma }_t/\sqrt{x_t}\}$ with increasing averaging size .</p>
+<p>However, if we treat the $y$ series as a whole, we can already a ${\sigma}$ series from GARCH and obtain a series of 2000 data with only 1 calculation.</p>
+<p>The problem is the $\sigma_{GARCH}$ with two method, although being close, is not identical after all. This is contradict to the spirit of expanding window analysis, the result obtained from the last step of expanding window should be equal to the result obtained from the whole series.</p>
+<p>Also, the standard error obtained by GARCH is divergent sometime. If the standard error is calculated by Huber-White method, the related matrix would be singular and it is not able to obtain standard error. Even if the matrix is not singular, the error will increase sharply. This is why the confidence interval occasionally behave strangely. The reason behind the singularity is not investigate yet.</p>
+<p><strong>Conclusion</strong></p>
+<p>The bounded lognormal index follows a mean reverting process, and can be modelled by CIR model. The mean reverting properties is confirmed that AR-GARCH(1,1) model with a high z-score.</p>
+
+</body>
+</html>
