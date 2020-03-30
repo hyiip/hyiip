@@ -108,7 +108,7 @@ $(document).ready(() => {
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 <p><strong>Analysis different index with CIR model</strong></p>
 <p><strong>Model</strong></p>
-<p>6 indexes are analyzed in this report. They are 1) Dow Jones Industrial Average (DJI), 2) Hang Seng index (HSI), 3) S&amp;P 500 (GSPC), 4) NASDAQ Composite (IXIC) 5) DAX (GDAXI) and 6) Nikkei 225 (N225). The dataframe is started from the earliest record that can be obtained, until 9/3/2020.</p>
+<p>6 indexes are analyzed in this report. They are 1) Dow Jones Industrial Average (DJI), 2) Hang Seng index (HSI), 3) S&amp;P 500 (GSPC), 4) NASDAQ Composite (IXIC) 5) DAX (GDAXI) and 6) Nikkei 225 (N225). The dataframe is started from the earliest record that can be obtained, until 27/03/2020.</p>
 <p>The model used for indices is as following: <br />$$ y=- ln \frac{x_U-x}{x_U-x_L}\ $$ <br /> with <br />
 $$dy=\kappa \left(\theta -y\right)dt+\sigma \sqrt{y}\ dW\ -(1)$$ <br /> Here, $x = S / S_{MA}$ . $S$ is the value of index of specific day, and $S_{MA}$ is the n-day moving average of the index. Therefore, $x$ is the normalized index value.</p>
 <p>$x_U$ and $x_L$ indicate the upper and lower boundaries of $x$.</p>
@@ -156,17 +156,11 @@ Index:
 
 <div class="btn-group-toggle" data-toggle="buttons">
   SD: 
-  <label class="btn btn-outline-secondary">
-    <input type="radio" name="rr3" value="150" autocomplete="off">1.5
-  </label>
   <label class="btn btn-outline-secondary active">
     <input type="radio" name="rr3" value="175" checked autocomplete="off">1.75
   </label>
   <label class="btn btn-outline-secondary">
     <input type="radio" name="rr3" value="200" autocomplete="off">2
-  </label>
-  <label class="btn btn-outline-secondary">
-    <input type="radio" name="rr3" value="250" autocomplete="off">2.5
   </label>
 </div>
 
@@ -239,17 +233,11 @@ Index:
 
 <div class="btn-group-toggle" data-toggle="buttons">
   SD: 
-  <label class="btn btn-outline-secondary">
-    <input type="radio" name="ir4" value="150" autocomplete="off">1.5
-  </label>
   <label class="btn btn-outline-secondary active">
     <input type="radio" name="ir4" value="175" checked autocomplete="off">1.75
   </label>
   <label class="btn btn-outline-secondary">
     <input type="radio" name="ir4" value="200" autocomplete="off">2
-  </label>
-  <label class="btn btn-outline-secondary">
-    <input type="radio" name="ir4" value="250" autocomplete="off">2.5
   </label>
 </div>
 
@@ -270,7 +258,7 @@ Index:
 
 <div class = "w-75" id="igraph"></div></p>
 <p>In this figure, the blue line represents the parameter calibrated by MLE, and orange line is obtained by GARCH. The light blue bounded area represents the 95% confidence interval of parameter obtained by MLE. Similarly, the light orange area is the confidence interval by GARCH.</p>
-<p>The conversion of z-score and p-value can be done by some simple function. Since they are equivalent, z-score is used in this report. The plot of z-score is shown below:</p>
+<p>The conversion of z-score and p-value can be done by some simple function. Since they are equivalent, z-score is used. The plot of z-score is shown below:</p>
 <p><div class="btn-group-toggle" data-toggle="buttons">
   Mode: 
   <label class="btn btn-outline-secondary active">
@@ -324,17 +312,11 @@ Index:
 
 <div class="btn-group-toggle" data-toggle="buttons">
   SD: 
-  <label class="btn btn-outline-secondary">
-    <input type="radio" name="zr4" value="150" autocomplete="off">1.5
-  </label>
   <label class="btn btn-outline-secondary active">
     <input type="radio" name="zr4" value="175" checked autocomplete="off">1.75
   </label>
   <label class="btn btn-outline-secondary">
     <input type="radio" name="zr4" value="200" autocomplete="off">2
-  </label>
-  <label class="btn btn-outline-secondary">
-    <input type="radio" name="zr4" value="250" autocomplete="off">2.5
   </label>
 </div>
 
